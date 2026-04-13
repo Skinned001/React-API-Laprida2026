@@ -25,11 +25,12 @@ export const NaveModel = sequelize.define(
       allowNull: false,
       field: "tipo_armadura"
     },
-    espaciosArmas: {
-      type: DataTypes.JSON, 
-      allowNull: false,
-      field: "espacios_armas"
-    },
+ espaciosArmas: {
+  type: DataTypes.INTEGER, // ¡Cambiado de JSON a INTEGER!
+  allowNull: false,
+  defaultValue: 0,
+  field: "espacios_armas"
+},
     tipoReactor: {
       type: DataTypes.STRING(100),
       allowNull: false,
