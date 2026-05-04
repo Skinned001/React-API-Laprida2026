@@ -1,23 +1,45 @@
+import { ShipProvider, useShipContext } from './context/ShipContext';
 import { HomePage } from './pages/HomePage';
+import { ThemeToggle } from './components/componentToggle'; // <-- IMPORTANTE: Importamos el interruptor
 
-function App() {
+function AppContent() {
+  const { isDarkMode } = useShipContext();
+
   return (
-    <div className="min-h-screen p-6 bg-[#050b14] text-slate-200 font-sans selection:bg-cyan-500 selection:text-white">
-      <header className="mb-10 text-center">
-        <h1 className="text-4xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 uppercase">
-          Astillero Imperial: Stellaris
-        </h1>
-        <div className="h-[2px] w-64 mx-auto mt-2 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50"></div>
-        <p className="mt-2 text-xs text-cyan-500/60 tracking-[0.2em] uppercase">Módulo de Gestión de Flota v1.0.4</p>
+    <div className={`min-h-screen p-6 transition-colors duration-500 font-sans selection:bg-cyan-500 selection:text-white ${
+      isDarkMode 
+      ? 'bg-[#050b14] text-slate-200' // Tema Oscuro (Espacial)
+      : 'bg-slate-100 text-slate-900'    // Tema Claro (Laboratorio)
+    }`}>
+      <header className="mb-10 flex justify-between items-center max-w-7xl mx-auto">
+        <div className="text-left">
+          <h1 className={`text-4xl font-bold tracking-widest uppercase ${
+            isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600' : 'text-blue-900'
+          }`}>
+            Astillero Imperial
+          </h1>
+          <p className="text-[10px] tracking-[0.2em] uppercase opacity-60">Módulo de Gestión de Flota</p>
+        </div>
+
+        {/* El interruptor táctico ahora está importado y operativo */}
+        <ThemeToggle />
       </header>
 
-      {/* Cambiamos <CentroMando /> por <HomePage /> */}
       <HomePage />
       
-      <footer className="mt-20 text-center text-[10px] text-slate-600 uppercase tracking-widest">
-        &copy; 2026 Registro Galáctico de Naves - IPF Software Dev
+      <footer className="mt-20 text-center text-[10px] text-slate-500 uppercase tracking-widest">
+        &copy; 2026 Registro Galáctico - IPF Software Dev
       </footer>
     </div>
+  );
+}
+
+// Nota: App envuelve a AppContent con el Provider para encender la red
+function App() {
+  return (
+    <ShipProvider>
+      <AppContent />
+    </ShipProvider>
   );
 }
 
